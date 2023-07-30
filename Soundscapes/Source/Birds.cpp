@@ -1,0 +1,46 @@
+/*
+  ==============================================================================
+
+    Birds.cpp
+    Created: 29 Jul 2023
+    Author:  Giacomo Loparco
+
+  ==============================================================================
+*/
+
+#include "Birds.h"
+//#include <random>
+#include <cmath>
+
+Bird::Bird(double sampleRate)
+{
+    // Set the sample rate
+    setSampleRate = sampleRate;
+    // TODO: Set random values based on ranges
+    // Base frequency of the call, lowest note hit
+    freq = 500;
+    // Volume (0-1)
+    level = 0.3;
+    // Length in seconds
+    duration = 5.0;
+    // Pitch modulation period (time for mod to cycle in seconds)
+    sawSpeed = 1.0;
+    // Direction, dictating how far left (0) or right (1) it is
+    direction = 0.5;
+    
+    // Set the angle increment needed for the call waveform
+    angleDelta = (freq / setSampleRate) * 2.0 * M_PI;
+}
+
+double * Bird::nextSong()
+{
+    // Array to return values for left (0) and right (1) channels
+    static double sampleReturn [2];
+    // Why are we casting like this..?
+    auto currentSample = (float) sin(angleDelta);
+    // Divide the sample w.r.t level and direction
+    // TODO: Add direction into the equation, did a .5 thing and it felt weird
+    sampleReturn[0] = currentSample * level;
+    sampleReturn[1] = currentSample * level;
+    return sampleReturn;
+}

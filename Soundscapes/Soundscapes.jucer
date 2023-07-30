@@ -5,6 +5,8 @@
               companyWebsite="www.loparcog.github.io" displaySplashScreen="1">
   <MAINGROUP id="LRywqX" name="Soundscapes">
     <GROUP id="{27144B2A-A3C0-ADEB-5B90-8F5795B8440E}" name="Source">
+      <FILE id="LKIYnk" name="Birds.cpp" compile="1" resource="0" file="Source/Birds.cpp"/>
+      <FILE id="SViSM5" name="Birds.h" compile="0" resource="0" file="Source/Birds.h"/>
       <FILE id="bKxl0K" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="NUogvp" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="ZrMINj" name="MainComponent.cpp" compile="1" resource="0"

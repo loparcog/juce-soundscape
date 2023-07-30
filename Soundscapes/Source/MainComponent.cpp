@@ -1,4 +1,5 @@
 #include "MainComponent.h"
+#include "Birds.h"
 
 //==============================================================================
 MainComponent::MainComponent()
@@ -30,24 +31,25 @@ MainComponent::~MainComponent()
 //==============================================================================
 void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
-    // This function will be called when the audio device is started, or when
-    // its settings (i.e. sample rate, block size, etc) are changed.
-
-    // You can use this function to initialise any resources you might need,
-    // but be careful - it will be called on the audio thread, not the GUI thread.
-
-    // For more details, see the help for AudioProcessor::prepareToPlay()
+    setSampleRate = sampleRate;
+    auto cyclesPerSample = 500.0 / setSampleRate;
+    angleDelta = cyclesPerSample * 2.0 * juce::MathConstants<double>::pi;
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
 {
-    // Your audio-processing code goes here!
+    // When no sounds, use bufferToFill.clearActiveBufferRegion();
+    auto level = 0.125f;
+    auto* leftBuffer  = bufferToFill.buffer->getWritePointer (0, bufferToFill.startSample);
+    auto* rightBuffer = bufferToFill.buffer->getWritePointer (1, bufferToFill.startSample);
 
-    // For more details, see the help for AudioProcessor::getNextAudioBlock()
-
-    // Right now we are not producing any data, in which case we need to clear the buffer
-    // (to prevent the output of random noise)
-    bufferToFill.clearActiveBufferRegion();
+    for (auto sample = 0; sample < bufferToFill.numSamples; ++sample)
+    {
+        auto currentSample = (float) std::sin (angleCurrent);
+        angleCurrent += angleDelta;
+        leftBuffer[sample]  = currentSample * level;
+        rightBuffer[sample] = currentSample * level;
+    }
 }
 
 void MainComponent::releaseResources()
