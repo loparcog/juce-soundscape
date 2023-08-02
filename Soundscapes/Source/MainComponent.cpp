@@ -1,5 +1,5 @@
 #include "MainComponent.h"
-#include "Birds.h"
+#include "Director.h"
 
 //==============================================================================
 MainComponent::MainComponent()
@@ -22,6 +22,7 @@ MainComponent::MainComponent()
     }
 }
 
+// Deconstructor
 MainComponent::~MainComponent()
 {
     // This shuts down the audio device and clears the audio source.

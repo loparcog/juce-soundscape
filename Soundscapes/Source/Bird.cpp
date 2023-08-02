@@ -8,7 +8,7 @@
   ==============================================================================
 */
 
-#include "Birds.h"
+#include "Bird.h"
 //#include <random>
 #include <cmath>
 
@@ -22,7 +22,7 @@ Bird::Bird(double sampleRate)
     // Volume (0-1)
     level = 0.3;
     // Length in seconds
-    duration = 5.0;
+    duration = 5.0 * setSampleRate;
     // Pitch modulation period (time for mod to cycle in seconds)
     sawSpeed = 1.0;
     // Direction, dictating how far left (0) or right (1) it is
@@ -32,7 +32,16 @@ Bird::Bird(double sampleRate)
     angleDelta = (freq / setSampleRate) * 2.0 * M_PI;
 }
 
-double * Bird::nextSong()
+bool Bird::isDone()
+{
+    if (duration == 0)
+    {
+        return true;
+    }
+    return false;
+}
+
+double * Bird::nextSample()
 {
     // Array to return values for left (0) and right (1) channels
     static double sampleReturn [2];
@@ -42,5 +51,9 @@ double * Bird::nextSong()
     // TODO: Add direction into the equation, did a .5 thing and it felt weird
     sampleReturn[0] = currentSample * level;
     sampleReturn[1] = currentSample * level;
+    if (--duration == 0)
+    {
+        return sampleReturn;
+    }
     return sampleReturn;
 }

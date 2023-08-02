@@ -10,12 +10,18 @@
 
 #pragma once
 
-class Bird{
+class Bird
+{
 public:
+    // Constructor, taking in sample rate
     Bird(double sampleRate);
-    double* nextSong();
+    // Get next sample in the song
+    double* nextSample();
+    // Is the object done
     bool isDone();
 private:
+    // Whether the bird object is currently active
+    bool active = false;
     double freq = 0.0, duration = 0.0, sawSpeed = 0.0, setSampleRate = 0.0;
     double level = 0.0, angleDelta = 0.0, direction = 0.0;
     double sawBounds [2] = {1.0, 10.0};
