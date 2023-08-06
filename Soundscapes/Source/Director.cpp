@@ -9,11 +9,24 @@
 */
 
 #include "Director.h"
+#include <iostream>
 #include <vector>
 
 // Constructor
+Director::Director()
+{
+    // Assume sample rate..?
+    setSampleRate = 48000;
+}
+
 Director::Director(double sampleRate)
 {
+    setSampleRate = sampleRate;
+}
+
+void Director::SR(double sampleRate)
+{
+    // Set sample rate
     setSampleRate = sampleRate;
 }
 

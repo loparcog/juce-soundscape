@@ -28,7 +28,7 @@ public:
 private:
     double setSampleRate = 0.0, angleDelta = 0.0, angleCurrent = 0.0;
     juce::TextButton btnAddBird;
-    Director SoundMgmt;
+    Director soundDir;
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)

@@ -4,6 +4,7 @@
 //==============================================================================
 MainComponent::MainComponent()
 {
+    soundDir = Director();
     addAndMakeVisible(btnAddBird);
     btnAddBird.setButtonText("Add a Bird");
     btnAddBird.onClick = [this] {buttonClicked(); };
@@ -38,6 +39,7 @@ MainComponent::~MainComponent()
 void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
     setSampleRate = sampleRate;
+    soundDir.SR(sampleRate);
     auto cyclesPerSample = 500.0 / setSampleRate;
     angleDelta = cyclesPerSample * 2.0 * juce::MathConstants<double>::pi;
 }
@@ -45,16 +47,14 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
 {
     // When no sounds, use bufferToFill.clearActiveBufferRegion();
-    auto level = 0.125f;
     auto* leftBuffer  = bufferToFill.buffer->getWritePointer (0, bufferToFill.startSample);
     auto* rightBuffer = bufferToFill.buffer->getWritePointer (1, bufferToFill.startSample);
 
     for (auto sample = 0; sample < bufferToFill.numSamples; ++sample)
     {
-        auto currentSample = (float) std::sin (angleCurrent);
-        angleCurrent += angleDelta;
-        leftBuffer[sample]  = currentSample * level;
-        rightBuffer[sample] = currentSample * level;
+        double *currentSample = soundDir.nextSampleAll();
+        leftBuffer[sample]  = *currentSample;
+        rightBuffer[sample] = *(currentSample + 1);
     }
 }
 
@@ -77,7 +77,8 @@ void MainComponent::paint (juce::Graphics& g)
 
 void MainComponent::buttonClicked()
 {
-    std::cout << "Button!";
+    // Add a new bird
+    soundDir.createBird();
 }
 
 void MainComponent::resized()
