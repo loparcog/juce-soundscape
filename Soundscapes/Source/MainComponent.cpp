@@ -4,6 +4,9 @@
 //==============================================================================
 MainComponent::MainComponent()
 {
+    addAndMakeVisible(btnAddBird);
+    btnAddBird.setButtonText("Add a Bird");
+    btnAddBird.onClick = [this] {buttonClicked(); };
     // Make sure you set the size of the component after
     // you add any child components.
     setSize (800, 600);
@@ -26,7 +29,9 @@ MainComponent::MainComponent()
 MainComponent::~MainComponent()
 {
     // This shuts down the audio device and clears the audio source.
+    //btnAddBird.removeListener (this);
     shutdownAudio();
+    
 }
 
 //==============================================================================
@@ -70,9 +75,15 @@ void MainComponent::paint (juce::Graphics& g)
     // You can add your drawing code here!
 }
 
+void MainComponent::buttonClicked()
+{
+    std::cout << "Button!";
+}
+
 void MainComponent::resized()
 {
     // This is called when the MainContentComponent is resized.
     // If you add any child components, this is where you should
     // update their positions.
+    btnAddBird.setBounds (10, 10, getWidth() - 20, 40);
 }

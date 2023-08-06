@@ -51,9 +51,9 @@ double * Bird::nextSample()
     // TODO: Add direction into the equation, did a .5 thing and it felt weird
     sampleReturn[0] = currentSample * level;
     sampleReturn[1] = currentSample * level;
-    if (--duration == 0)
+    /*if (--duration == 0)
     {
         return sampleReturn;
-    }
+    }*/
     return sampleReturn;
 }

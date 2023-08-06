@@ -9,6 +9,7 @@
 */
 
 #include "Director.h"
+#include <vector>
 
 // Constructor
 Director::Director(double sampleRate)
@@ -18,15 +19,20 @@ Director::Director(double sampleRate)
 
 double* Director::nextSampleAll()
 {
-    // Check if we have a bird object
-    if (birdSound != 0)
+    double static buffer [2] = {0,0};
+    // Loop through sound vector
+    for (int i = 0; i < vSounds.size(); i++)
     {
-        // Get the sample
+        // Get the waveform to send out
+        double *currentSample = vSounds[i].nextSample();
+        buffer[0] = *currentSample * 0.2;
+        buffer[1] = *(currentSample + 1) * 0.2;
     }
-    return nullptr;
+    
+    return buffer;
 }
 
 void Director::createBird()
 {
-    birdSound = Bird(setSampleRate);
+    vSounds.push_back(Bird(setSampleRate));
 }

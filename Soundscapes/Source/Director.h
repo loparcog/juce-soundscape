@@ -10,6 +10,7 @@
 
 #pragma once
 #include "Bird.h"
+#include <vector>
 
 class Director
 {
@@ -23,8 +24,6 @@ public:
 private:
     // Stored metadata
     double setSampleRate = 0.0;
-    // TODO: Make this a general sound object container
-    // How would I make that dynamic for different sound objects..?
-    // Maybe make a set amount of each object at all times..?
-    birdSound = 0;
+    // Sound variable
+    std::vector<Bird> vSounds;
 };
