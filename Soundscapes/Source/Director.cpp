@@ -38,8 +38,8 @@ double* Director::nextSampleAll()
     {
         // Get the waveform to send out
         double *currentSample = vSounds[i].nextSample();
-        buffer[0] = *currentSample * 0.2;
-        buffer[1] = *(currentSample + 1) * 0.2;
+        buffer[0] += *currentSample * 0.2;
+        buffer[1] += *(currentSample + 1) * 0.2;
     }
     
     return buffer;
@@ -48,4 +48,5 @@ double* Director::nextSampleAll()
 void Director::createBird()
 {
     vSounds.push_back(Bird(setSampleRate));
+    std::cout << vSounds.size();
 }
